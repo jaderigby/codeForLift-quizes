@@ -22,22 +22,21 @@ def write_file(FILEPATH, DATA):
 	FILE.write(DATA)
 	FILE.close()
 
-# def read_json(FILEPATH):
-# 	return json.loads(read_file(FILEPATH))
-#
-# def write_json(FILEPATH, DATA):
-
+def write_json(FILEPATH, DATA):
+	FILE = open(FILEPATH, 'w')
+	data = json.dumps(DATA, sort_keys=True, indent=4)
+	FILE.write(data)
+	FILE.close()
 
 def print_to_scorecard(ACTION, ELEM, TOTAL):
 	home = expanduser("~")
-	filePath = home + '/Desktop/scorecard.md'
+	filePath = home + '/Documents/codeForLift-quizes/profiles/profile.py'
+	settings = get_settings()
 	if not os.path.isfile(filePath):
-		write_file(filePath, 'NAME: {}\n'.format(raw_input("Please enter your name: ")))
-	oldData = read_file(filePath)
-	s = '''
-quiz: {quiz}
-date: {date}
-score: {points}/{possible}
-'''.format(quiz = ACTION, date = datetime.datetime.now().strftime("%m/%d/%Y"), points = ELEM, possible = TOTAL)
-	newData = oldData + s
-	write_file(filePath, newData)
+		settings.name = raw_input("Please enter your name: ")
+	newObj = {}
+	newObj['quiz'] = ACTION
+	newObj['date'] = datetime.datetime.now().strftime("%m/%d/%Y")
+	newObj['score'] = "{}/{}".format(ELEM, TOTAL)
+	settings['codeForLift']['quizes'].append(newObj)
+	write_json(filePath, settings)
