@@ -1,7 +1,7 @@
 import re, helpers
 import messages as msg
 
-# settings = helpers.get_settings()
+settings = helpers.get_settings()
 
 def execute(ACTION):
     def question1():
