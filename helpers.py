@@ -32,8 +32,9 @@ def print_to_scorecard(ACTION, ELEM, TOTAL):
 	home = expanduser("~")
 	filePath = home + '/Documents/codeForLift-quizes/profiles/profile.py'
 	settings = get_settings()
-	if not os.path.isfile(filePath):
-		settings.name = raw_input("Please enter your name: ")
+	print("settings: ".format(settings))
+	if settings['name'] == "":
+		settings['name'] = raw_input("Please enter your name: ")
 	newObj = {}
 	newObj['quiz'] = ACTION
 	newObj['date'] = datetime.datetime.now().strftime("%m/%d/%Y")
