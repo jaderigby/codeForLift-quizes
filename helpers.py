@@ -32,7 +32,7 @@ def print_score_to_scorecard(NAME, ACTION, ELEM, TOTAL):
 	home = expanduser("~")
 	cardPath = home + '/Desktop/scorecard.md'
 	if not os.path.isfile(cardPath):
-		write_file(cardPath, 'NAME: {}\n'.format(raw_input("Please enter your name: ")))
+		write_file(cardPath, 'NAME: {}\n'.format(NAME))
 	oldData = read_file(cardPath)
 	s = '''
 quiz: {quiz}
