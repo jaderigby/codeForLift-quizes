@@ -73,7 +73,8 @@ d) a format for comparing strings
     finalTally = q1 + q2 + q3 + q4
     pointsPossible = 11
 
-    helpers.print_to_scorecard(ACTION, finalTally, pointsPossible)
+    studentName = helpers.print_score_to_settings(ACTION, finalTally, pointsPossible)
+    helpers.print_score_to_scorecard(studentName, ACTION, finalTally, pointsPossible)
 
     print
     print("You scored {} out of {}".format(finalTally, pointsPossible))

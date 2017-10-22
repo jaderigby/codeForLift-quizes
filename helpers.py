@@ -28,9 +28,23 @@ def write_json(FILEPATH, DATA):
 	FILE.write(data)
 	FILE.close()
 
-def print_to_scorecard(ACTION, ELEM, TOTAL):
+def print_score_to_scorecard(NAME, ACTION, ELEM, TOTAL):
 	home = expanduser("~")
-	filePath = home + '/Documents/codeForLift-quizes/profiles/profile.py'
+	cardPath = home + '/Desktop/scorecard.md'
+	if not os.path.isfile(cardPath):
+		write_file(cardPath, 'NAME: {}\n'.format(raw_input("Please enter your name: ")))
+	oldData = read_file(cardPath)
+	s = '''
+quiz: {quiz}
+date: {date}
+score: {points}/{possible}
+'''.format(quiz = ACTION, date = datetime.datetime.now().strftime("%m/%d/%Y"), points = ELEM, possible = TOTAL)
+	newData = oldData + s
+	write_file(cardPath, newData)
+
+def print_score_to_settings(ACTION, ELEM, TOTAL):
+	toolDirectory = os.path.dirname(__file__)
+	filePath = toolDirectory + '/profiles/profile.py'
 	settings = get_settings()
 	if settings['name'] == "":
 		settings['name'] = raw_input("Please enter your name: ")
@@ -39,4 +53,7 @@ def print_to_scorecard(ACTION, ELEM, TOTAL):
 	newObj['date'] = datetime.datetime.now().strftime("%m/%d/%Y")
 	newObj['score'] = "{}/{}".format(ELEM, TOTAL)
 	settings['codeForLift']['quizes'].append(newObj)
-	write_json(filePath, settings)
+	wrapObj = {}
+	wrapObj['settings'] = settings
+	write_json(filePath, wrapObj)
+	return settings['name']
